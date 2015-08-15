@@ -45,5 +45,5 @@ var webSocketServer = ws.createServer(function (conn) {
 
 
 twit.stream('statuses/filter', {track: 'twitaroid_dev'}, function (stream) {
-        streamHandler(stream, socketServer);
+        streamHandler(stream, webSocketServer);
 });
