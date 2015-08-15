@@ -7,6 +7,7 @@ var schema = new mongoose.Schema({
     , body: String
     , date: Date
     , screenname: String
+    , image_url: String
 });
 
 schema.statics.reset = function(callback){
