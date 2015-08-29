@@ -27,6 +27,20 @@ server.get('/', function (req, res, next) {
     }
 });
 
+function initWithTweets(req, res, next) {
+    Polaroid.find({}, function (err, codes) {
+        if (err) return console.error(err);
+            res.send(codes);
+
+            if(next) {
+                next();
+            }
+        });
+}
+
+server.get('/init', initWithTweets);
+
+
 server.listen(port, function () {
     console.log('Twitaroid-Server listening on port ' + port);
 });
@@ -43,7 +57,11 @@ var webSocketServer = ws.createServer(function (conn) {
     });
 }).listen(port + 1);
 
-
 twit.stream('statuses/filter', {track: 'twitaroid_dev'}, function (stream) {
         streamHandler(stream, webSocketServer);
+
+        stream.on('error', function(error, code) {
+            // Note: If code is 401 and API keys are valid, make 100% sure the clock is synced. If not, it will fail!
+            console.log("Error: " + error + " code: " + code);
+        });
 });
