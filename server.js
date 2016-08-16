@@ -22,20 +22,20 @@ server.get('/', function (req, res, next) {
 
     res.send(data);
 
-    if (next){
-      next();
+    if (next) {
+        next();
     }
 });
 
 function initWithTweets(req, res, next) {
     Polaroid.find({}, function (err, codes) {
         if (err) return console.error(err);
-            res.send(codes);
+        res.send(codes);
 
-            if(next) {
-                next();
-            }
-        });
+        if (next) {
+            next();
+        }
+    });
 }
 
 server.get('/init', initWithTweets);
@@ -53,15 +53,15 @@ var webSocketServer = ws.createServer(function (conn) {
     });
 
     conn.on("error", function (err) {
-      console.log("WebSocketServer: Error;", err);
+        console.log("WebSocketServer: Error;", err);
     });
 }).listen(port + 1);
 
-twit.stream('statuses/filter', {track: 'twitaroid_dev'}, function (stream) {
-        streamHandler(stream, webSocketServer);
+twit.stream('statuses/filter', { track: config.twitter.hashtag_track }, function (stream) {
+    streamHandler(stream, webSocketServer);
 
-        stream.on('error', function(error, code) {
-            // Note: If code is 401 and API keys are valid, make 100% sure the clock is synced. If not, it will fail!
-            console.log("Error: " + error + " code: " + code);
-        });
+    stream.on('error', function (error, code) {
+        // Note: If code is 401 and API keys are valid, make 100% sure the clock is synced. If not, it will fail!
+        console.log("Error: " + error + " code: " + code);
+    });
 });

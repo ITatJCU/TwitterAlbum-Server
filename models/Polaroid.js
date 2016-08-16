@@ -10,8 +10,8 @@ var schema = new mongoose.Schema({
     , image_url: String
 });
 
-schema.statics.reset = function(callback){
-    Polaroid.remove({},function(err){
+schema.statics.reset = function (callback) {
+    Polaroid.remove({}, function (err) {
         console.log('Polaroid: Dropping collection');
         callback(err);
     });
@@ -19,13 +19,13 @@ schema.statics.reset = function(callback){
 
 schema.statics.recent = function (limit, callback) {
 
-    if (!limit || limit == 0){
+    if (!limit || limit == 0) {
         limit = 20;
     }
     var tweets = [];
 
     Polaroid.find({}, 'twid screenname avatar body date')
-        .sort({date: 'desc'}).limit(limit).exec(function (err, docs) {
+        .sort({ date: 'desc' }).limit(limit).exec(function (err, docs) {
 
             if (!err) {
                 tweets = docs;

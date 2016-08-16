@@ -4,9 +4,9 @@ module.exports = function (stream, socketServer) {
 
     stream.on('data', function (data) {
 
-      if (!data.entities || !data.entities.media || data.entities.media.length === 0){
-        return;
-      }
+        if (!data.entities || !data.entities.media || data.entities.media.length === 0) {
+            return;
+        }
 
         var tweet = {
             twid: data['id'],
@@ -22,13 +22,13 @@ module.exports = function (stream, socketServer) {
 
         tweet.save(function (err) {
             if (!err) {
-              console.log(tweet);
+                console.log(tweet);
 
-              socketServer.connections.forEach(function (conn) {
-                  if (conn.readyState == conn.OPEN) {
-                      conn.sendText("0" + JSON.stringify(tweet));
-                  }
-              });
+                socketServer.connections.forEach(function (conn) {
+                    if (conn.readyState == conn.OPEN) {
+                        conn.sendText("0" + JSON.stringify(tweet));
+                    }
+                });
             }
         });
     });
