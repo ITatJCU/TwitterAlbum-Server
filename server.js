@@ -3,8 +3,7 @@ var restify = require('restify'),
     twitter = require('ntwitter'),
     config = require('./config'),
     Polaroid = require('./models/Polaroid'),
-    streamHandler = require('./utils/streamHandler'),
-    routes = require('./routes');
+    streamHandler = require('./utils/streamHandler');
 
 // Create an express instance and set a port variable
 var port = process.env.PORT || 8080;
@@ -40,14 +39,6 @@ function initWithTweets(req, res, next) {
 }
 
 server.get('/init', initWithTweets);
-
-server.get('/routes', function (req, res, next) {
-    res.send({ ip: routes.ip, socket: routes.socket });
-
-    if (next) {
-        next();
-    }
-})
 
 server.listen(port, function () {
     console.log('Twitaroid-Server listening on port ' + port);
