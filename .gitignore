@@ -1,5 +1,6 @@
 #ignore configuration file
 config.js
+routes.js
 
 # Logs
 logs
